@@ -4,7 +4,9 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.LocalStorage
 import "Database.js" as JS
-Grid {
+
+
+  Grid {
         columns: 2
         spacing: 2
         anchors.fill: parent
@@ -21,10 +23,10 @@ Grid {
 
         }
         TextField {
-                id:departureInput
+                id:departureInputReq
                 width:window.width/4
                 placeholderText: qsTr("")
-
+            //    onTextEdited: console.log(acceptableInput)
 
             }
       }
@@ -39,10 +41,10 @@ Grid {
 
         }
         TextField {
-                id:destinationInput
+                id:destinationInputReq
                 width:window.width/4
                 placeholderText: qsTr("")
-
+              //  onTextEdited: console.log(acceptableInput)
 
             }
       }
@@ -57,17 +59,14 @@ Grid {
 
         }
         TextField {
-                id:dateInput
+                id:dateInputReq
                 width:window.width/4
                 placeholderText: qsTr("")
                 validator: RegularExpressionValidator { regularExpression: /^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29)$/}
+              //  onTextEdited: console.log(acceptableInput)
 
-
-        }
-
-
-        }
-
+            }
+      }
        Row{
       width:window.width/2
              Text {
@@ -79,29 +78,11 @@ Grid {
 
         }
         TextField {
-                id:timeInput
+                id:timeInputReq
                 width:window.width/4
                 placeholderText: qsTr("")
                 validator: RegularExpressionValidator { regularExpression: /^([1\s]?[0-9\s]|2[0-3\s]):([0-5\s][0-9\s]):([0-5\s][0-9\s])$/ }
-
-
-            }
-      }
-      Row{
-      width:window.width/2
-             Text {
-            width:window.width/4
-            text: "Самолёт"
-            font.pixelSize: 16
-            horizontalAlignment: Text.AlignHCenter
-
-
-        }
-        TextField {
-                id:airplaneInput
-                width:window.width/4
-                placeholderText: qsTr("")
-
+              //  onTextEdited: console.log(acceptableInput)
 
             }
       }
@@ -109,55 +90,66 @@ Grid {
       width:window.width/2
              Text {
             width:window.width/4
-            text: "Цена"
+            text: "Имя"
             font.pixelSize: 16
             horizontalAlignment: Text.AlignHCenter
 
 
         }
         TextField {
-                id:priceInput
+                id:nameInputReq
                 width:window.width/4
                 placeholderText: qsTr("")
-                validator: RegularExpressionValidator { regularExpression: /\d{1,4}/ }
+               // onTextEdited: console.log(acceptableInput)
+
+            }
+      }
+      Row{
+      width:window.width/2
+             Text {
+            width:window.width/4
+            text: "Фамилия"
+            font.pixelSize: 16
+            horizontalAlignment: Text.AlignHCenter
 
 
         }
+        TextField {
+                id:surnameInputReq
+                width:window.width/4
+                placeholderText: qsTr("")
+               // onTextEdited: console.log(acceptableInput))
+
+            }
       }
 
-
-
-
-    function clearElem() {
-        departureInput.clear()
-        destinationInput.clear()
-        dateInput.clear()
-        timeInput.clear()
-        airplaneInput.clear()
-        priceInput.clear()
+       function clearElem() {
+        departureInputReq.clear()
+        destinationInputReq.clear()
+        dateInputReq.clear()
+        timeInputReq.clear()
+        surnameInputReq.clear()
+        nameInputReq.clear()
     }
 
-
-    function addNewElem(){
-        var rowid = parseInt(JS.dbInsertInfoFlight(departureInput.text, destinationInput.text, dateInput.text,timeInput.text,airplaneInput.text,Number(priceInput.text)), 10)
-        listView.model.append({rowidF: rowid,
-                               departureF: departureInput.text,
-                               destinationF: destinationInput.text,
-                               dateF: dateInput.text,
-                               timeF: timeInput.text,
-                               airplaneF:airplaneInput.text,
-                               priceF:Number(priceInput.text)})
+    function addNewElemR(){
+        var rowid = parseInt(JS.dbInsertInfoRequest(departureInputReq.text, destinationInputReq.text, dateInputReq.text,timeInputReq.text,surnameInputReq.text,nameInputReq.text), 10)
+        listViewR.model.append({rowidReq: rowid,
+                               departureReq: departureInputReq.text,
+                               destinationReq: destinationInputReq.text,
+                               dateReq: dateInputReq.text,
+                               timeReq: timeInputReq.text,
+                               surnameReq:surnameInputReq.text,
+                               nameReq:nameInputReq.text})
     }
 
-    function deleteCurElem(){
-        JS.dbDeleteInfoFlightRow(listView.model.get(listView.currentIndex).rowidF)
-        listView.model.remove(listView.currentIndex, 1)
-         if (listView.count == 0) {
-             listView.currentIndex = -1
+    function deleteCurElemR(){
+        JS.dbDeleteInfoRequestRow(listViewR.model.get(listViewR.currentIndex).rowidReq)
+        listViewR.model.remove(listViewR.currentIndex, 1)
+         if (listViewR.count == 0) {
+             listViewR.currentIndex = -1
          }
     }
 
 
 }
-
-

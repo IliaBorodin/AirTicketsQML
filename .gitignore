@@ -1,0 +1,6 @@
+*.zip
+/venv
+*.zip.crdownload
+/.idea
+*.xlsx
+/pdfs
